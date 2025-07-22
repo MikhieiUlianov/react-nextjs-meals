@@ -13,6 +13,10 @@ export type MealInput = {
   creator_email: string;
   slug?: string;
 };
+
+function isInvalidText(text: string) {
+  return !text || text.trim() === "";
+}
 export async function shareMeal(formData: FormData) {
   const title = formData.get("title");
   const summary = formData.get("summary");
@@ -40,7 +44,18 @@ export async function shareMeal(formData: FormData) {
     creator,
     creator_email,
   };
-
+  if (
+    isInvalidText(meal.title) ||
+    isInvalidText(meal.summary) ||
+    isInvalidText(meal.instructions) ||
+    isInvalidText(meal.creator) ||
+    isInvalidText(meal.creator_email) ||
+    !meal.creator_email.includes("@") ||
+    !meal.image ||
+    meal.image.size === 0
+  ) {
+    throw new Error("Invalid error");
+  }
   await saveMeal(meal);
   redirect("/meals");
 }
