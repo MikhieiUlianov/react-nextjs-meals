@@ -8,6 +8,8 @@ export type MealItemType = {
   title: string;
   summary: string;
   creator: string;
+  creator_email?: string;
+  instructions?: string;
 };
 type MealsProps = {
   meals: MealItemType[];
