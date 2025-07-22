@@ -4,12 +4,12 @@ import MealItem from "./MealItem";
 export type MealItemType = {
   id: string;
   slug: string;
-  image: string;
+  image: File | string;
   title: string;
   summary: string;
   creator: string;
-  creator_email?: string;
-  instructions?: string;
+  creator_email: string;
+  instructions: string;
 };
 type MealsProps = {
   meals: MealItemType[];
