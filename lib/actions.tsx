@@ -8,7 +8,7 @@ export type MealInput = {
   title: string;
   summary: string;
   instructions: string;
-  image: string | File;
+  image: File;
   creator: string;
   creator_email: string;
   slug?: string;
@@ -17,7 +17,10 @@ export type MealInput = {
 function isInvalidText(text: string) {
   return !text || text.trim() === "";
 }
-export async function shareMeal(formData: FormData) {
+export async function shareMeal(
+  prevState: { message: string },
+  formData: FormData
+) {
   const title = formData.get("title");
   const summary = formData.get("summary");
   const instructions = formData.get("instructions");
@@ -54,7 +57,7 @@ export async function shareMeal(formData: FormData) {
     !meal.image ||
     meal.image.size === 0
   ) {
-    throw new Error("Invalid error");
+    return { message: "Invalid input" };
   }
   await saveMeal(meal);
   redirect("/meals");
